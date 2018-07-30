@@ -1,0 +1,10 @@
+-- @path Datafile=/Prueba ATL/Datafile.ecore
+-- @path Openapi=/Prueba ATL/Openapi.ecore
+module Datafile2Openapi;
+create OUT: Openapi from IN: Datafile;
+rule CSV2OpenAPI {
+	from
+		s: Datafile!Datafile
+	to
+		t: Openapi!API (openapi <- s.filename)
+}
