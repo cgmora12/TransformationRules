@@ -1,5 +1,5 @@
--- @path Datafile=/Prueba ATL/Datafile.ecore
--- @path Openapi=/Prueba ATL/Openapi.ecore
+-- @path Datafile=/TransformationRules/Datafile.ecore
+-- @path Openapi=/TransformationRules/Openapi.ecore
 module Datafile2Openapi;
 create OUT: Openapi from IN: Datafile;
 rule CSV2OpenAPI {

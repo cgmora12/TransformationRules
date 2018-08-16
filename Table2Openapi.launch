@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.m2m.atl.adt.launching.atlTransformation">
-    <stringAttribute key="ATL File Name" value="/TransformationRules/Datafile2Openapi.atl"/>
+    <stringAttribute key="ATL File Name" value="/TransformationRules/Table2Openapi.atl"/>
     <stringAttribute key="ATL VM" value="EMF-specific VM"/>
     <stringAttribute key="ATL_COMPILER" value="atl2006"/>
     <booleanAttribute key="IS_REFINING" value="false"/>
     <mapAttribute key="Input">
-        <mapEntry key="IN" value="Datafile"/>
+        <mapEntry key="IN" value="Table"/>
     </mapAttribute>
     <mapAttribute key="Libs"/>
     <mapAttribute key="Model Handler">
-        <mapEntry key="Datafile" value="EMF"/>
         <mapEntry key="Openapi" value="EMF"/>
+        <mapEntry key="Table" value="EMF"/>
     </mapAttribute>
     <mapAttribute key="ModelType">
-        <mapEntry key="Datafile" value="METAMODELINPUT"/>
         <mapEntry key="IN" value="MODELINPUT"/>
         <mapEntry key="OUT" value="MODELOUTPUT"/>
         <mapEntry key="Openapi" value="METAMODELOUTPUT"/>
+        <mapEntry key="Table" value="METAMODELINPUT"/>
     </mapAttribute>
     <mapAttribute key="Options">
         <mapEntry key="OPTION_CLEAR" value="false"/>
@@ -37,11 +37,11 @@
         <mapEntry key="OUT" value="Openapi"/>
     </mapAttribute>
     <mapAttribute key="Path">
-        <mapEntry key="Datafile" value="/TransformationRules/Datafile.ecore"/>
-        <mapEntry key="IN" value="/TransformationRules/sample-Datafile.xmi"/>
+        <mapEntry key="IN" value="/TransformationRules/sample-Table.xmi"/>
         <mapEntry key="OUT" value="/TransformationRules/sample-Openapi.xmi"/>
         <mapEntry key="Openapi" value="/TransformationRules/Openapi.ecore"/>
+        <mapEntry key="Table" value="/TransformationRules/Table.ecore"/>
     </mapAttribute>
     <listAttribute key="Superimpose"/>
-    <stringAttribute key="bad_container_name" value="Datafile2Openapi.launch"/>
+    <stringAttribute key="bad_container_name" value="/Transformation"/>
 </launchConfiguration>

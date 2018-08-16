@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="Table">
+	<Table filename="Table.csv">
+		<row position="0">
+			<cell value="stationName" type="String" />
+			<cell value="lineName" type="String" />
+		</row>
+		<row position="1">
+			<cell value="Atocha" type="String" />
+			<cell value="Línea 1" type="String" />
+		</row>
+	</Table>
+</xmi:XMI>

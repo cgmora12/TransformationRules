@@ -1,0 +1,10 @@
+-- @path Table=/TransformationRules/Table.ecore
+-- @path Openapi=/TransformationRules/Openapi.ecore
+module Table2Openapi;
+create OUT: Openapi from IN: Table;
+rule CSV2OpenAPI {
+	from
+		s: Table!Table
+	to
+		t: Openapi!API (openapi <- s.filename)
+}
