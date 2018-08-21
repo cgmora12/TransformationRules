@@ -8,13 +8,16 @@ create openapi: Openapi from table: Table;
 rule Table2Openapi {
 	from
 		table: Table!Table
-	using {tableRow : Sequence(Table!Cell) = table.rows->first().cells;}
+	using {
+			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
+			lastTableRow : Sequence(Table!Cell) = table.rows->last().cells;
+	}
 	to
 		openapi: Openapi!API (
 			openapi <- '3.0.0',
 			info <- openapi_info,--thisModule.resolveTemp(table.info, 'openapi_info'),
 			servers <- Sequence{openapi_servers, openapi_servers2},
-			paths <- openapi_paths,
+			paths <- Sequence{openapi_basic_path, openapi_paths},
 			components <- openapi_components
 		),
 		openapi_info: Openapi!Info (
@@ -28,9 +31,13 @@ rule Table2Openapi {
 		openapi_servers2: Openapi!Server (
 			url <- 'www.urlprueba2.com'
 		),
-		openapi_paths: Openapi!Path (
-			pattern <- '/',
-			operations <- path_operations
+		openapi_basic_path: Openapi!Path (
+			pattern <- '/' ,
+			operations <- path_operation_basic_get
+		),
+		openapi_paths: distinct Openapi!Path foreach (cell in firstTableRow)(
+			pattern <- '/' + cell.value + '/{' + cell.value + '}',
+			operations <- path_operation->at(firstTableRow->indexOf(cell))
 		),
 		openapi_components: Openapi!Component (
 			schema <- component_schema
@@ -38,22 +45,27 @@ rule Table2Openapi {
 		component_schema: Openapi!Schema (
 			title <- 'COLUMNS',
 			type <- 'object',
-			required <- '',
+			required <- firstTableRow->first().value,
 			xml <- 'COLUMNS',
 			properties <- schema_properties
 		),
-		schema_properties: distinct Openapi!Property foreach (cell in tableRow)(
+		schema_properties: distinct Openapi!Property foreach (cell in firstTableRow)(
 			name <- cell.value,
-			propertyContent <- property_content -- use ->indexOf(cell)
+			type <- lastTableRow->at(firstTableRow->indexOf(cell)).type,
+			example <- lastTableRow->at(firstTableRow->indexOf(cell)).value	
 		),
-		property_content: Openapi!PropertyContent (
-			type <- table.rows->last().cells->first().type,
-			example <- table.rows->last().cells->first().value		
-		), 
-		path_operations: Openapi!Operation (
+		path_operation_basic_get: Openapi!Operation (
 			name <- 'get',
 			summary <- 'GET ' + table.filename,
 			operationId <- 'get' + table.filename,
+			description <- 'Use value \'all\' in a parameter for non-empty values',
+			responses <- operation_responses,
+			parameters <- operation_parameters_basic_get
+		),
+		path_operation: distinct Openapi!Operation foreach (cell in firstTableRow) (
+			name <- 'get',
+			summary <- 'GET ' + cell.value,
+			operationId <- 'get' + cell.value,
 			description <- 'Use value \'all\' in a parameter for non-empty values',
 			responses <- operation_responses,
 			parameters <- operation_parameters
@@ -71,14 +83,21 @@ rule Table2Openapi {
 		schema_items: Openapi!Item (
 			ref <- '#/components/schemas/COLUMNS'	
 		),
-		operation_parameters: distinct Openapi!Parameter foreach (cell in tableRow)(
+		operation_parameters_basic_get: distinct Openapi!Parameter foreach (cell in firstTableRow)(
 				in <- 'query',
 				name <- cell.value,
 				description <- cell.value,
-				schema <- parameter_schema
+				schema <- parameter_schema->at(firstTableRow->indexOf(cell))
 		),
-		parameter_schema: Openapi!Schema (
-				type <- 'string'
+		operation_parameters: distinct Openapi!Parameter foreach (cell in firstTableRow)(
+				in <- 'path',
+				name <- cell.value,
+				description <- cell.value,
+				schema <- parameter_schema->at(firstTableRow->indexOf(cell)),
+				required <- true
+		),
+		parameter_schema: distinct Openapi!Schema foreach (cell in firstTableRow)(
+				type <- cell.type
 		)
 }
 
