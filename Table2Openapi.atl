@@ -1,10 +1,94 @@
 -- @path Table=/TransformationRules/Table.ecore
 -- @path Openapi=/TransformationRules/Openapi.ecore
+
 module Table2Openapi;
-create OUT: Openapi from IN: Table;
-rule CSV2OpenAPI {
+
+create openapi: Openapi from table: Table;
+
+rule Table2Openapi {
 	from
-		s: Table!Table
+		table: Table!Table
+	using {tableRow : Sequence(Table!Cell) = table.rows->first().cells;}
 	to
-		t: Openapi!API (openapi <- s.filename)
+		openapi: Openapi!API (
+			openapi <- '3.0.0',
+			info <- openapi_info,--thisModule.resolveTemp(table.info, 'openapi_info'),
+			servers <- Sequence{openapi_servers, openapi_servers2},
+			paths <- openapi_paths,
+			components <- openapi_components
+		),
+		openapi_info: Openapi!Info (
+			title <- table.filename,
+			version <- '1',
+			description <- 'Obtaining the ' + table.filename
+		),
+		openapi_servers: Openapi!Server (
+			url <- 'www.urlprueba.com'
+		),
+		openapi_servers2: Openapi!Server (
+			url <- 'www.urlprueba2.com'
+		),
+		openapi_paths: Openapi!Path (
+			pattern <- '/',
+			operations <- path_operations
+		),
+		openapi_components: Openapi!Component (
+			schema <- component_schema
+		),
+		component_schema: Openapi!Schema (
+			title <- 'COLUMNS',
+			type <- 'object',
+			required <- '',
+			xml <- 'COLUMNS',
+			properties <- schema_properties
+		),
+		schema_properties: distinct Openapi!Property foreach (cell in tableRow)(
+			name <- cell.value,
+			propertyContent <- property_content -- use ->indexOf(cell)
+		),
+		property_content: Openapi!PropertyContent (
+			type <- table.rows->last().cells->first().type,
+			example <- table.rows->last().cells->first().value		
+		), 
+		path_operations: Openapi!Operation (
+			name <- 'get',
+			summary <- 'GET ' + table.filename,
+			operationId <- 'get' + table.filename,
+			description <- 'Use value \'all\' in a parameter for non-empty values',
+			responses <- operation_responses,
+			parameters <- operation_parameters
+		),
+		operation_responses: Openapi!Response (
+			code <- '200',
+			description <- 'successful operation',
+			contentType <- 'application/json',
+			schema <- response_schema
+		),
+		response_schema: Openapi!Schema (
+			type <- 'array',
+			items <- schema_items
+		),
+		schema_items: Openapi!Item (
+			ref <- '#/components/schemas/COLUMNS'	
+		),
+		operation_parameters: distinct Openapi!Parameter foreach (cell in tableRow)(
+				in <- 'query',
+				name <- cell.value,
+				description <- cell.value,
+				schema <- parameter_schema
+		),
+		parameter_schema: Openapi!Schema (
+				type <- 'string'
+		)
 }
+
+--rule TableInfo2OpenapiInfo {
+--	from
+--		info: Table!Info
+--	to
+--		openapi_info: Openapi!Info (
+--			title <- info.filename,
+--			version <- '1',
+--			description <- 'Obtaining the ' + info.filename
+--		)
+--}

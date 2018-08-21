@@ -5,7 +5,7 @@
     <stringAttribute key="ATL_COMPILER" value="atl2006"/>
     <booleanAttribute key="IS_REFINING" value="false"/>
     <mapAttribute key="Input">
-        <mapEntry key="IN" value="Table"/>
+        <mapEntry key="table" value="Table"/>
     </mapAttribute>
     <mapAttribute key="Libs"/>
     <mapAttribute key="Model Handler">
@@ -13,10 +13,10 @@
         <mapEntry key="Table" value="EMF"/>
     </mapAttribute>
     <mapAttribute key="ModelType">
-        <mapEntry key="IN" value="MODELINPUT"/>
-        <mapEntry key="OUT" value="MODELOUTPUT"/>
         <mapEntry key="Openapi" value="METAMODELOUTPUT"/>
         <mapEntry key="Table" value="METAMODELINPUT"/>
+        <mapEntry key="openapi" value="MODELOUTPUT"/>
+        <mapEntry key="table" value="MODELINPUT"/>
     </mapAttribute>
     <mapAttribute key="Options">
         <mapEntry key="OPTION_CLEAR" value="false"/>
@@ -28,19 +28,19 @@
         <mapEntry key="supportUML2Stereotypes" value="false"/>
     </mapAttribute>
     <listAttribute key="OrderedInput">
-        <listEntry value="IN"/>
+        <listEntry value="table"/>
     </listAttribute>
     <listAttribute key="OrderedOutput">
-        <listEntry value="OUT"/>
+        <listEntry value="openapi"/>
     </listAttribute>
     <mapAttribute key="Output">
-        <mapEntry key="OUT" value="Openapi"/>
+        <mapEntry key="openapi" value="Openapi"/>
     </mapAttribute>
     <mapAttribute key="Path">
-        <mapEntry key="IN" value="/TransformationRules/sample-Table.xmi"/>
-        <mapEntry key="OUT" value="/TransformationRules/sample-Openapi.xmi"/>
         <mapEntry key="Openapi" value="/TransformationRules/Openapi.ecore"/>
         <mapEntry key="Table" value="/TransformationRules/Table.ecore"/>
+        <mapEntry key="openapi" value="/TransformationRules/sample-Openapi.xmi"/>
+        <mapEntry key="table" value="/TransformationRules/sample-Table.xmi"/>
     </mapAttribute>
     <listAttribute key="Superimpose"/>
     <stringAttribute key="bad_container_name" value="/Transformation"/>
