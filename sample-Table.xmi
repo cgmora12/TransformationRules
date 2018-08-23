@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:table="platform:/resource/TransformationRules/Table.ecore">
-  <table:Table filename="Data.csv" rows="/1 /4" />
-  <table:Row position="0" cells="/2 /3"/>
-  <table:Cell value="stationname" type="string"/>
-  <table:Cell value="linename" type="string"/>
-  <table:Row position="1" cells="/5 /6"/>
-  <table:Cell value="Atocha" type="string"/>
-  <table:Cell value="Linea 1" type="string"/>
-</xmi:XMI>
+<table:Table xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:table="platform:/resource/TransformationRules/Table.ecore" filename="Data.csv" >
+  	<rows position="0">
+  		<cells value="stationname" type="string"/>
+  		<cells value="linename" type="string"/>
+  	</rows>
+  	<rows position="1">
+  		<cells value="Atocha" type="string"/>
+  		<cells value="Linea 1" type="string"/>
+  	</rows>
+ </table:Table>

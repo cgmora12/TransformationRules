@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:openapi="platform:/resource/TransformationRules/Openapi.ecore">
-  <openapi:API openapi="3.0.0" info="/1" servers="/2 /3" paths="/4 /5 /6" components="/7"/>
-  <openapi:Info version="1" title="Data.csv" description="Obtaining the Data.csv"/>
-  <openapi:Server url="www.urlprueba.com"/>
-  <openapi:Server url="www.urlprueba2.com"/>
-  <openapi:Path pattern="/" operations="/11"/>
-  <openapi:Path pattern="/stationname/{stationname}" operations="/12"/>
-  <openapi:Path pattern="/linename/{linename}" operations="/13"/>
-  <openapi:Component schema="/8"/>
-  <openapi:Schema type="object" required="stationname" title="COLUMNS" xml="COLUMNS" properties="/9 /10"/>
-  <openapi:Property name="stationname" type="string" example="Atocha"/>
-  <openapi:Property name="linename" type="string" example="Linea 1"/>
-  <openapi:Operation name="get" summary="GET Data.csv" operationId="getData.csv" description="Use value 'all' in a parameter for non-empty values" parameters="/17 /18" responses="/14"/>
-  <openapi:Operation name="get" summary="GET stationname" operationId="getstationname" description="Use value 'all' in a parameter for non-empty values" parameters="/19" responses="/14"/>
-  <openapi:Operation name="get" summary="GET linename" operationId="getlinename" description="Use value 'all' in a parameter for non-empty values" parameters="/20" responses="/14"/>
-  <openapi:Response code="200" description="successful operation" contentType="application/json" schema="/15"/>
-  <openapi:Schema type="array" items="/16"/>
-  <openapi:Item ref="#/components/schemas/COLUMNS"/>
-  <openapi:Parameter name="stationname" in="query" description="stationname" schema="/21"/>
-  <openapi:Parameter name="linename" in="query" description="linename" schema="/22"/>
-  <openapi:Parameter name="stationname" in="path" description="stationname" required="true" schema="/21"/>
-  <openapi:Parameter name="linename" in="path" description="linename" required="true" schema="/22"/>
-  <openapi:Schema type="string"/>
-  <openapi:Schema type="string"/>
-</xmi:XMI>
+<openapi:API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:openapi="platform:/resource/TransformationRules/Openapi.ecore" openapi="3.0.0">
+  <info version="1" title="Data.csv" description="Obtaining the Data.csv"/>
+  <servers url="www.urlprueba.com"/>
+  <servers url="www.urlprueba2.com"/>
+  <paths pattern="/">
+    <operations name="get" summary="GET Data.csv" operationId="getData.csv" description="Use value 'all' in a parameter for non-empty values">
+      <parameters name="stationname" in="query" description="stationname"/>
+      <parameters name="linename" in="query" description="linename"/>
+    </operations>
+  </paths>
+  <paths pattern="/stationname/{stationname}">
+    <operations name="get" summary="GET stationname" operationId="getstationname" description="Use value 'all' in a parameter for non-empty values">
+      <parameters name="stationname" in="path" description="stationname" required="true">
+        <schema type="string"/>
+      </parameters>
+    </operations>
+  </paths>
+  <paths pattern="/linename/{linename}">
+    <operations name="get" summary="GET linename" operationId="getlinename" description="Use value 'all' in a parameter for non-empty values">
+      <parameters name="linename" in="path" description="linename" required="true">
+        <schema type="string"/>
+      </parameters>
+      <responses code="200" description="successful operation" contentType="application/json">
+        <schema type="array">
+          <items ref="#/components/schemas/COLUMNS"/>
+        </schema>
+      </responses>
+    </operations>
+  </paths>
+  <components>
+    <schema type="object" required="stationname" title="COLUMNS" xml="COLUMNS">
+      <properties name="stationname" type="string" example="Atocha"/>
+      <properties name="linename" type="string" example="Linea 1"/>
+    </schema>
+  </components>
+</openapi:API>

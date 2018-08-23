@@ -3,17 +3,17 @@
 
 module Table2Openapi;
 
-create openapi: Openapi from table: Table;
+create OUT: Openapi from IN: Table;
 
-rule Table2Openapi {
+rule Main {
 	from
-		table: Table!Table
+		s: Table!Table
 	using {
-			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
-			lastTableRow : Sequence(Table!Cell) = table.rows->last().cells;
+			firstTableRow : Sequence(Table!Cell) = s.rows->first().cells;
+			lastTableRow : Sequence(Table!Cell) = s.rows->last().cells;
 	}
 	to
-		openapi: Openapi!API (
+		t: Openapi!API (
 			openapi <- '3.0.0',
 			info <- openapi_info,--thisModule.resolveTemp(table.info, 'openapi_info'),
 			servers <- Sequence{openapi_servers, openapi_servers2},
@@ -21,9 +21,9 @@ rule Table2Openapi {
 			components <- openapi_components
 		),
 		openapi_info: Openapi!Info (
-			title <- table.filename,
+			title <- s.filename,
 			version <- '1',
-			description <- 'Obtaining the ' + table.filename
+			description <- 'Obtaining the ' + s.filename
 		),
 		openapi_servers: Openapi!Server (
 			url <- 'www.urlprueba.com'
@@ -56,8 +56,8 @@ rule Table2Openapi {
 		),
 		path_operation_basic_get: Openapi!Operation (
 			name <- 'get',
-			summary <- 'GET ' + table.filename,
-			operationId <- 'get' + table.filename,
+			summary <- 'GET ' + s.filename,
+			operationId <- 'get' + s.filename,
 			description <- 'Use value \'all\' in a parameter for non-empty values',
 			responses <- operation_responses,
 			parameters <- operation_parameters_basic_get
