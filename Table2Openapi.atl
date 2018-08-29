@@ -1,3 +1,4 @@
+-- -- @atlcompiler emftvm
 -- @path Table=/TransformationRules/Table.ecore
 -- @path Openapi=/TransformationRules/Openapi.ecore
 
@@ -26,7 +27,7 @@ rule Main {
 			description <- 'Obtaining the ' + s.filename
 		),
 		openapi_servers: Openapi!Server (
-			url <- 'http://www.urlprueba.com'
+			url <- 'http://www.urlprueba.com/v1'
 		),
 		openapi_basic_path: Openapi!Path (
 			pattern <- '/' ,
@@ -136,6 +137,7 @@ rule Main {
 				type <- cell.type
 		)
 }
+
 
 --rule TableInfo2OpenapiInfo {
 --	from

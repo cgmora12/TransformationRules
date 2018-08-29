@@ -38,7 +38,7 @@
     </mapAttribute>
     <mapAttribute key="Path">
         <mapEntry key="IN" value="/TransformationRules/table.xmi"/>
-        <mapEntry key="OUT" value="/TransformationRules/sample-Openapi.xmi"/>
+        <mapEntry key="OUT" value="/TransformationRules/openapi.xmi"/>
         <mapEntry key="Openapi" value="/TransformationRules/Openapi.ecore"/>
         <mapEntry key="Table" value="/TransformationRules/Table.ecore"/>
     </mapAttribute>

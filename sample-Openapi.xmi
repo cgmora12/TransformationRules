@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <openapi:API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:openapi="platform:/resource/TransformationRules/Openapi.ecore" openapi="3.0.0">
   <info version="1.0.0" title="data.csv" description="Obtaining the data.csv"/>
-  <servers url="www.urlprueba.com"/>
-  <servers url="www.urlprueba2.com"/>
+  <servers url="http://www.urlprueba.com"/>
   <paths pattern="/">
     <get summary="GET data.csv" operationId="getdata.csv" description="Use value 'all' in a parameter for non-empty values">
       <parameters name="stationName" in="query" description="stationName">
