@@ -80,7 +80,7 @@ rule Main {
 			description <- 'Use value \'all\' in a parameter for non-empty values',
 			responses <- operation_responses_basic,
 			parameters <- Sequence{operation_parameter_limit, operation_parameter_offset, operation_parameter_visualisation}
-				.union(firstTableRow -> collect(e | thisModule.OperationParemetersBasic(e)))
+				.union(firstTableRow -> collect(e | thisModule.OperationParametersBasic(e, s)))
 		),
 		operation_parameter_limit: Openapi!Parameter (
 				in <- 'query',
@@ -323,24 +323,33 @@ lazy rule SchemaItems {
 		)
 }
 
-lazy rule OperationParemetersBasic {
+lazy rule OperationParametersBasic {
 	from 
-		cell: Table!Cell
+		cell: Table!Cell,
+		table: Table!Table
 	to
 		operation_parameters_basic_get: Openapi!Parameter (
 				in <- 'query',
 				name <- cell.value,
 				description <- cell.value,
-				schema <- thisModule.ParemeterSchemaBasic(cell)
+				schema <- thisModule.ParameterSchemaBasic(cell, table)
 		)
 }
 
-lazy rule ParemeterSchemaBasic {
+lazy rule ParameterSchemaBasic {
 	from 
-		cell: Table!Cell
+		cell: Table!Cell,
+		table: Table!Table
+	using {
+			firstTableRow : Sequence(Table!Cell) = table.rows->first().cells;
+			lastTableRow : Sequence(Table!Cell) = table.rows->last().cells;
+	}
 	to
 		parameter_schema_basic: Openapi!Schema (
-				type <- cell.type
+				type <- if lastTableRow->size() < firstTableRow->size() 
+				then cell.type
+				else lastTableRow->at(firstTableRow->indexOf(cell)).type
+				endif
 		)
 }
 
